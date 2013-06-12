@@ -25,7 +25,7 @@
 
 (function ($) {
 
-  var maxfps             = 25,
+  var maxfps             = 20,
       delay              = 1 / maxfps * 1000,
       lastRender         = new Date().getTime(),
       layers             = [],

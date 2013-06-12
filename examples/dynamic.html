@@ -60,6 +60,25 @@
       div#btns a.active {
         font-weight: bold;
       }
+
+
+    /* transitions to make plax smoother with CSS3 */
+
+    img {
+      /* change duration value to whatever you like */
+      -webkit-transition-duration: 0.2s;
+         -moz-transition-duration: 0.2s;
+          -ms-transition-duration: 0.2s;
+           -o-transition-duration: 0.2s;
+              transition-duration: 0.2s;
+      -webkit-transition-property: top, left;
+         -moz-transition-property: top, left;
+          -ms-transition-property: top, left;
+           -o-transition-property: top, left;
+              transition-property: top, left;
+
+    }
+
     </style>
     <script type="text/javascript">
       $(document).ready(function () {
