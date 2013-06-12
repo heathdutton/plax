@@ -35,7 +35,8 @@
       motionMin          = -1,
       motionStartX       = null,
       motionStartY       = null,
-      ignoreMoveable     = false
+      ignoreMoveable     = false,
+      ignoreMouse        = false
 
   // Public Methods
   $.fn.plaxify = function (params){
@@ -216,9 +217,11 @@
         if (typeof opts.gyroRange === 'number' && opts.gyroRange > 0) motionDegrees = opts.gyroRange
       }
 
-      $(document).bind('mousemove.plax', function (e) {
-        plaxifier(e)
-      })
+      if (!ignoreMouse){
+        $(document).bind('mousemove.plax', function (e) {
+          plaxifier(e)
+        })
+      }
 
       if(moveable()){
         window.ondeviceorientation = function(e){plaxifier(e)}
