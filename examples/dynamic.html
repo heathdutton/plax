@@ -66,64 +66,98 @@
 
     img {
       /* change duration value to whatever you like */
-      -webkit-transition-duration: 0.2s;
-         -moz-transition-duration: 0.2s;
-          -ms-transition-duration: 0.2s;
-           -o-transition-duration: 0.2s;
-              transition-duration: 0.2s;
-      -webkit-transition-property: top, left;
-         -moz-transition-property: top, left;
-          -ms-transition-property: top, left;
-           -o-transition-property: top, left;
-              transition-property: top, left;
+      /*-webkit-transition-duration: 0.2s;*/
+         /*-moz-transition-duration: 0.2s;*/
+          /*-ms-transition-duration: 0.2s;*/
+           /*-o-transition-duration: 0.2s;*/
+              /*transition-duration: 0.2s;*/
+      /*-webkit-transition-property: top, left;*/
+         /*-moz-transition-property: top, left;*/
+          /*-ms-transition-property: top, left;*/
+           /*-o-transition-property: top, left;*/
+              /*transition-property: top, left;*/
 
     }
 
     </style>
     <script type="text/javascript">
-      $(document).ready(function () {
-        var toggleStatus = 'small'
-        setSmall()
-        $.plax.enable()
+      $(document).ready(function() {
+          $.plax.auto({
+              'ignoreMouse' : true
+          });
+      });
+//          var lowestIndex = 0,
+//            highestIndex = 0,
+//            zIndex = 0,
+//            maxRange = 50;
+//
+//          var elements = $('body *').filter(function() {
+//            zIndex = $(this).css('z-index');
+//            if (zIndex != 'auto' && zIndex != 0) {
+//              if (zIndex > highestIndex){
+//                highestIndex = zIndex;
+//              } else if (zIndex < lowestIndex){
+//                lowestIndex = zIndex;
+//              }
+//              return true;
+//            } else {
+//              return false;
+//            }
+//          });
+//
+//          var modifier = maxRange / (highestIndex - lowestIndex);
+//
+//          elements.each(function(){
+//            var range = $(this).css('z-index') * modifier;
+//            var rangeAbs = Math.abs(range);
+//              console.log(rangeAbs);
+//            $(this).plaxify({
+//              'xRange' : rangeAbs,
+//              'yRange' : rangeAbs,
+//              'invert' : (range >= 0)
+//            });
+//          });
+//
+//        $.plax.enable();
 
-        $("#range-small").click(function(){
-          if(toggleStatus != 'small'){
-            toggleRange()
-          }
-        })
-        $("#range-big").click(function(){
-          if(toggleStatus != 'big'){
-            toggleRange()
-          }
-        })
-        function toggleRange() {
-          if(toggleStatus == 'small'){
-            setBig()
-          } else if (toggleStatus == 'big') {
-            setSmall()
-          } else {
-            console.log(toggleStatus)
-          }
-          $("#range-big").toggleClass('active')
-          $("#range-small").toggleClass('active')
-
-          return false
-        }
-        function setSmall(){
-          $('#plax-sphere-1').plaxify({"xRange":40,"yRange":40})
-          $('#plax-logo').plaxify({"xRange":20,"yRange":20})
-          $('#plax-sphere-2').plaxify({"xRange":10,"yRange":10})
-          $('#plax-sphere-3').plaxify({"xRange":40,"yRange":40,"invert":true})
-          toggleStatus = 'small'
-        }
-        function setBig(){
-          $('#plax-sphere-1').plaxify({"xRange":200,"yRange":200})
-          $('#plax-logo').plaxify({"xRange":80,"yRange":80})
-          $('#plax-sphere-2').plaxify({"xRange":50,"yRange":50})
-          $('#plax-sphere-3').plaxify({"xRange":200,"yRange":200,"invert":true})
-          toggleStatus = 'big'
-        }
-      })
+//        $("#range-small").click(function(){
+//          if(toggleStatus != 'small'){
+//            toggleRange()
+//          }
+//        })
+//        $("#range-big").click(function(){
+//          if(toggleStatus != 'big'){
+//            toggleRange()
+//          }
+//        })
+//        function toggleRange() {
+//          if(toggleStatus == 'small'){
+//            setBig()
+//          } else if (toggleStatus == 'big') {
+//            setSmall()
+//          } else {
+//            console.log(toggleStatus)
+//          }
+//          $("#range-big").toggleClass('active')
+//          $("#range-small").toggleClass('active')
+//
+//          return false
+//        }
+//        function setSmall(){
+//          $('#plax-sphere-1').plaxify({"xRange":40,"yRange":40})
+//          $('#plax-logo').plaxify({"xRange":20,"yRange":20})
+//          $('#plax-sphere-2').plaxify({"xRange":10,"yRange":10})
+//          $('#plax-sphere-3').plaxify({"xRange":40,"yRange":40,"invert":true})
+//          toggleStatus = 'small'
+//        }
+//        function setBig(){
+//          $('#plax-sphere-1').plaxify({"xRange":200,"yRange":200})
+//          $('#plax-logo').plaxify({"xRange":80,"yRange":80})
+//          $('#plax-sphere-2').plaxify({"xRange":50,"yRange":50})
+//          $('#plax-sphere-3').plaxify({"xRange":200,"yRange":200,"invert":true})
+//          toggleStatus = 'big'
+//        }
+//      })
     </script>
     
   </head>

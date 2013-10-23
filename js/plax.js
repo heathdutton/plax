@@ -36,71 +36,71 @@
       motionStartX       = null,
       motionStartY       = null,
       ignoreMoveable     = false,
-      ignoreMouse        = false
+      ignoreMouse        = false;
 
   // Public Methods
   $.fn.plaxify = function (params){
     return this.each(function () {
-      var layerExistsAt = -1
+      var layerExistsAt = -1;
       var layer         = {
         "xRange": $(this).data('xrange') || 0,
         "yRange": $(this).data('yrange') || 0,
         "invert": $(this).data('invert') || false,
         "background": $(this).data('background') || false
-      }
+      };
 
       for (var i=0;i<layers.length;i++){
         if (this === layers[i].obj.get(0)){
-          layerExistsAt = i
+          layerExistsAt = i;
         }
       }
 
       for (var param in params) {
         if (layer[param] == 0) {
-          layer[param] = params[param]
+          layer[param] = params[param];
         }
       }
 
-      layer.inversionFactor = (layer.invert ? -1 : 1) // inversion factor for calculations
+      layer.inversionFactor = (layer.invert ? -1 : 1); // inversion factor for calculations
 
       // Add an object to the list of things to parallax
-      layer.obj    = $(this)
+      layer.obj    = $(this);
       if(layer.background) {
         // animate using the element's background
-        pos = (layer.obj.css('background-position') || "0px 0px").split(/ /)
+        pos = (layer.obj.css('background-position') || "0px 0px").split(/ /);
         if(pos.length != 2) {
-          return
+          return;
         }
-        x = pos[0].match(/^((-?\d+)\s*px|0+\s*%|left)$/)
-        y = pos[1].match(/^((-?\d+)\s*px|0+\s*%|top)$/)
+        x = pos[0].match(/^((-?\d+)\s*px|0+\s*%|left)$/);
+        y = pos[1].match(/^((-?\d+)\s*px|0+\s*%|top)$/);
         if(!x || !y) {
           // no can-doesville, babydoll, we need pixels or top/left as initial values (it mightbe possible to construct a temporary image from the background-image property and get the dimensions and run some numbers, but that'll almost definitely be slow)
-          return
+          return;
         }
-        layer.originX = layer.startX = x[2] || 0
-        layer.originY = layer.startY = y[2] || 0
+        layer.originX = layer.startX = x[2] || 0;
+        layer.originY = layer.startY = y[2] || 0;
       } else {
 
         // Figure out where the element is positioned, then reposition it from the top/left
-        var position = layer.obj.position()
+        var position = layer.obj.position();
         layer.obj.css({
           'top'   : position.top,
           'left'  : position.left,
           'right' :'',
           'bottom':''
-        })
-        layer.originX = layer.startX = position.left
-        layer.originY = layer.startY = position.top
+        });
+        layer.originX = layer.startX = position.left;
+        layer.originY = layer.startY = position.top;
       }
 
-      layer.startX -= layer.inversionFactor * Math.floor(layer.xRange/2)
-      layer.startY -= layer.inversionFactor * Math.floor(layer.yRange/2)
+      layer.startX -= layer.inversionFactor * Math.floor(layer.xRange/2);
+      layer.startY -= layer.inversionFactor * Math.floor(layer.yRange/2);
       if(layerExistsAt >= 0){
-        layers.splice(layerExistsAt,1,layer)
+        layers.splice(layerExistsAt,1,layer);
       } else {
-        layers.push(layer)
+        layers.push(layer);
       }
-      
+
     })
   }
 
@@ -108,21 +108,21 @@
   //
   // returns true if the browser has window.DeviceMotionEvent (mobile)
   function moveable(){
-    return (ignoreMoveable==true) ? false : window.DeviceOrientationEvent != undefined
+    return (ignoreMoveable==true) ? false : window.DeviceOrientationEvent != undefined;
   }
 
   // The values pulled from the gyroscope of a motion device.
   //
   // Returns an object literal with x and y as options.
   function valuesFromMotion(e) {
-    x = e.gamma
-    y = e.beta
+    x = e.gamma;
+    y = e.beta;
 
     // Swap x and y in Landscape orientation
     if (Math.abs(window.orientation) === 90) {
-      var a = x;
-      x = y;
-      y = a;
+      var a = x,
+          x = y,
+          y = a;
     }
 
     // Invert x and y in upsidedown orientations
@@ -131,8 +131,8 @@
       y = -y;
     }
 
-    motionStartX = (motionStartX == null) ? x : motionStartX
-    motionStartY = (motionStartY == null) ? y : motionStartY
+    motionStartX = (motionStartX == null) ? x : motionStartX;
+    motionStartY = (motionStartY == null) ? y : motionStartY;
 
     return {
       x: x - motionStartX,
@@ -140,8 +140,8 @@
     }
   }
 
-  // Move the elements in the `layers` array within their ranges, 
-  // based on mouse or motion input 
+  // Move the elements in the `layers` array within their ranges,
+  // based on mouse or motion input
   //
   // Parameters
   //
@@ -149,24 +149,24 @@
   //
   // returns nothing
   function plaxifier(e) {
-    if (new Date().getTime() < lastRender + delay) return
-      lastRender = new Date().getTime()
+    if (new Date().getTime() < lastRender + delay) return;
+      lastRender = new Date().getTime();
     var leftOffset = (plaxActivityTarget.offset() != null) ? plaxActivityTarget.offset().left : 0,
         topOffset  = (plaxActivityTarget.offset() != null) ? plaxActivityTarget.offset().top : 0,
         x          = e.pageX-leftOffset,
-        y          = e.pageY-topOffset
+        y          = e.pageY-topOffset;
 
     if (
       x < 0 || x > plaxActivityTarget.width() ||
       y < 0 || y > plaxActivityTarget.height()
-    ) return
+    ) return;
 
     if(moveable()){
       if(e.gamma == undefined){
-        ignoreMoveable = true
-        return
+        ignoreMoveable = true;
+        return;
       }
-      values = valuesFromMotion(e)
+      values = valuesFromMotion(e);
 
       // Admittedly fuzzy measurements
       x = values.x / motionDegrees
@@ -181,14 +181,14 @@
 
     var hRatio = x/((moveable() == true) ? motionMax : plaxActivityTarget.width()),
         vRatio = y/((moveable() == true) ? motionMax : plaxActivityTarget.height()),
-        layer, i
+        layer, i;
 
     for (i = layers.length; i--;) {
-      layer = layers[i]
-      newX = layer.startX + layer.inversionFactor*(layer.xRange*hRatio)
-      newY = layer.startY + layer.inversionFactor*(layer.yRange*vRatio)
+      layer = layers[i];
+      newX = layer.startX + layer.inversionFactor*(layer.xRange*hRatio);
+      newY = layer.startY + layer.inversionFactor*(layer.yRange*vRatio);
       if(layer.background) {
-        layer.obj.css('background-position', newX+'px '+newY+'px')
+        layer.obj.css('background-position', newX+'px '+newY+'px');
       } else {
         layer.obj
           .css('left', newX)
@@ -256,13 +256,71 @@
         }
       }
       if (opts && typeof opts.clearLayers === 'boolean' && opts.clearLayers) layers = []
+    },
+
+    // Automatically plaxify a target (or everything) that has a z-index.
+    // Optionally include a magnitude
+    auto: function(opts){
+      var lowestIndex = 0,
+        highestIndex = 0,
+        zIndex = 0,
+        magnitude = 100,
+        target = $('body *'),
+        applyCss = true;
+
+      if (opts){
+        if (typeof opts.magnitude === 'integer'){
+          magnitude = opts.magnitude;
+        }
+        if (typeof opts.target === 'object'){
+          target = opts.target;
+        }
+        if (typeof opts.applyCss === 'bool'){
+          applyCss = opts.applyCss;
+        }
+      }
+
+      var elements = target.filter(function () {
+        zIndex = $(this).css('z-index');
+        if (zIndex != 'auto' && zIndex != 0) {
+          if (zIndex > highestIndex) {
+            highestIndex = zIndex;
+          } else if (zIndex < lowestIndex) {
+            lowestIndex = zIndex;
+          }
+          return true;
+        } else {
+          return false;
+        }
+      });
+
+      if (elements.length){
+        if (applyCss){
+          $("<style type='text/css'> .autoplax {-webkit-transition-duration: 0.2s;-moz-transition-duration: 0.2s;-ms-transition-duration: 0.2s;-o-transition-duration: 0.2s;transition-duration: 0.2s;-webkit-transition-property: top, left;-moz-transition-property: top, left;-ms-transition-property: top, left;-o-transition-property: top, left;transition-property: top, left;} </style>").appendTo("head");
+          elements.addClass('autoplax');
+        }
+
+        var modifier = magnitude / (highestIndex - lowestIndex);
+
+        elements.each(function() {
+          var range = $(this).css('z-index') * modifier;
+          var rangeAbs = Math.abs(range);
+          $(this).plaxify({
+            'xRange': rangeAbs,
+            'yRange': rangeAbs,
+            'invert': (range >= 0)
+          });
+        });
+
+        $.plax.enable(opts);
+      }
     }
   }
 
   if (typeof ender !== 'undefined') {
-    $.ender($.fn, true)
+    $.ender($.fn, true);
   }
 
 })(function () {
-  return typeof jQuery !== 'undefined' ? jQuery : ender
+  return typeof jQuery !== 'undefined' ? jQuery : ender;
 }())
